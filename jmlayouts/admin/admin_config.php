@@ -92,9 +92,11 @@ class jmlayouts_ui extends e_admin_ui
                 'readParms' => array() ,
                 'writeParms' => array('size'=>'xxlarge') ,
             ),
-            'layout_options'  => array('title'=> '', 'tab'=>0,  'type'=>'str' , 'data' => 'json',
-            'width' => '38%', 'help' => '', 'readParms' => '', 'writeParms' => array("nolabel"=>1),  'class' => 'left', 'thclass' => 'left',
+            
+            'layout_options'  => array('title'=> '', 'tab'=>0,  'type'=>false, 'data' => 'json',
+            'width' => '38%', 'help' => '', 'readParms' => '',   'writeParms' => array("nolabel"=>1),  'class' => 'left', 'thclass' => 'left',
             ),
+            
             'layout_order'            => array(  'title' => LAN_ORDER,  'type' => 'number',  'data' => 'int'   ),
             'options'   => array(
                 'title' => LAN_OPTIONS,
