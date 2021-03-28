@@ -112,7 +112,7 @@ class jmlayouts_ui extends e_admin_ui
             ),
         );
  
-    protected  $fieldpref = array( 'layout_title', 'layout_mode', 'layout_header', 'layout_footer', 'layout_setting',  'layout_items');
+    protected $fieldpref = array( 'layout_title', 'layout_mode', 'layout_header', 'layout_footer', 'layout_setting',  'layout_items');
     protected $prefs = array();
 
     public $sitetheme = '';
@@ -137,8 +137,7 @@ class jmlayouts_ui extends e_admin_ui
             $layoutName = $val['@attributes']['title'] ;
             $key = preg_replace('/[\W]/', '', $key);  //because mode, the same code is for working with $mode
             $this->layouts[$key] = $layoutName;
-        }
-             
+        }    
         /**********************************************************************/
     }
         
@@ -160,7 +159,8 @@ class jmlayouts_ui extends e_admin_ui
          
         $headerlist = array();
         $directory = e_THEME. $this->sitetheme.'/headers';
-        if (is_dir($directory)) {
+        if (is_dir($directory)) 
+		{
             $files =  array_diff(scandir($directory), array('..', '.'));
             foreach ($files as $file) {
                 if (is_dir($directory."/".$file)) {
@@ -171,9 +171,10 @@ class jmlayouts_ui extends e_admin_ui
                 $headerlist[$this->sitetheme."/headers/".$file] = $this->sitetheme."/headers/".$file;
             }
         }
-		 
-		$directory = e_THEME. $this->theme_folder.'/headers';
-        if (is_dir($directory)) {
+         
+        $directory = e_THEME. $this->theme_folder.'/headers';
+        if (is_dir($directory)) 
+		{
             $files =  array_diff(scandir($directory), array('..', '.'));
             foreach ($files as $file) {
                 if (is_dir($directory."/".$file)) {
@@ -183,14 +184,15 @@ class jmlayouts_ui extends e_admin_ui
                 $fname = str_replace(".html", "", $file);
                 $headerlist[$this->theme_folder."/headers/".$file] = $this->theme_folder."/headers/".$file;
             }
-        } 
+        }
  
         $this->fields['layout_header']['writeParms']['optArray'] = $headerlist;
              
         /**********************************************************************/
-		$footerlist = array();
+        $footerlist = array();
         $directory = e_THEME. $this->sitetheme.'/footers';
-        if (is_dir($directory)) {
+        if (is_dir($directory)) 
+		{
             $files =  array_diff(scandir($directory), array('..', '.'));
             foreach ($files as $file) {
                 if (is_dir($directory."/".$file)) {
@@ -199,9 +201,10 @@ class jmlayouts_ui extends e_admin_ui
  
                 $footerlist[$this->sitetheme."/footers/".$file] = $this->sitetheme."/footers/".$file;
             }
-        }	 
-		$directory = e_THEME. $this->theme_folder.'/footers';
-        if (is_dir($directory)) {
+        }
+        $directory = e_THEME. $this->theme_folder.'/footers';
+        if (is_dir($directory)) 
+		{
             $files =  array_diff(scandir($directory), array('..', '.'));
             foreach ($files as $file) {
                 if (is_dir($directory."/".$file)) {
@@ -210,24 +213,25 @@ class jmlayouts_ui extends e_admin_ui
  
                 $footerlist[$this->theme_folder."/footers/".$file] = $this->theme_folder."/footers/".$file;
             }
-        } 
+        }
         $this->fields['layout_footer']['writeParms']['optArray'] = $footerlist;
  
         /**********************************************************************/
         //display available options sets
-		$settinglist = array();
-		$directory = e_THEME. $this->sitetheme.'/jmlayouts';
-        if (is_dir($directory)) {
+        $settinglist = array();
+        $directory = e_THEME. $this->sitetheme.'/jmlayouts';
+        if (is_dir($directory)) 
+		{
             $files =  array_diff(scandir($directory), array('..', '.'));
             foreach ($files as $file) {
                 if (is_dir($directory."/".$file)) {
                     continue;
-                }               
+                }
                 $settinglist[$this->sitetheme."/jmlayouts/".$file] = $this->sitetheme."/jmlayouts/".$file;
             }
-        }	
+        }
  
-		$directory = e_THEME. $this->theme_folder.'/jmlayouts';
+        $directory = e_THEME. $this->theme_folder.'/jmlayouts';
         if (is_dir($directory)) {
             $files =  array_diff(scandir($directory), array('..', '.'));
             foreach ($files as $file) {
@@ -236,7 +240,7 @@ class jmlayouts_ui extends e_admin_ui
                 }
                 $settinglist[$this->theme_folder."/jmlayouts/".$file] = $this->theme_folder."/jmlayouts/".$file;
             }
-        }	   
+        }
         $this->fields['layout_setting']['writeParms']['optArray'] = $settinglist;
         $this->postFilterMarkup = $this->AddButton();
     }
@@ -256,11 +260,38 @@ class jmlayouts_ui extends e_admin_ui
            
         return $text;
     }
-	public function beforeUpdate($new_data, $old_data, $id)
-	{
-		return $new_data;
-	}
+    public function beforeUpdate($new_data, $old_data, $id)
+    {
+        return $new_data;
+    }
  
+    
+    public function GeneratePage()
+    {
+        $text = e_SELF;
+        foreach ($this->layouts as $layoutmode=>$layoutname) {
+            $where = ' layout_mode = "'.$layoutmode.'" LIMIT 1 ';
+            $jmlayout = e107::getDb()->retrieve('jmlayout', 'layout_mode, layout_title, layout_setting', $where);
+                
+            if ($jmlayout['layout_mode']) {
+                //do nothing? Or update name?
+            } else {
+                $insertdata = array(
+                            'layout_mode'=> $layoutmode,
+                            'layout_title'=> $layoutname,
+                            'layout_setting'=> 'default',
+                            'layout_header'=> '',
+                            'layout_footer'=> '',
+                            'layout_options'=> array()
+                        );
+                $insertdata['_DUPLICATE_KEY_UPDATE'] = true; //just to be sure
+                e107::getDb()->insert('jmlayout', $insertdata);
+            }
+        }
+ 
+        header("location: ".e_SELF);
+        exit();
+    }
 }
                 
 
