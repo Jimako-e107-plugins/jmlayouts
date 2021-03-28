@@ -9,11 +9,7 @@ if (!getperms('P'))
 }
 
 require_once "admin_leftmenu.php";
-
-//  TODO: check if there is $mode
-define('JM_THEME_PREF_SECTION', $_GET['mode']);
  
-
 class jmlayouts_ui extends e_admin_ui
 {
 	protected $pluginName = 'jmlayout';
@@ -121,14 +117,14 @@ class jmlayouts_form_ui extends e_admin_form_ui
 		}
 
 		$jmlayout_values = e107::getDb()->retrieve('jmlayout', '*', "layout_mode  = '" . $name . "'");
-
+ 
 	    $settings = $this->elements_content($jmlayout_values['layout_setting']);
  
 		$text = "<table class='table table-condensed table-bordered'  style='table-layout: fixed;' ><tbody> ";
 		$text .= "<tr><td  class='bg-primary' colspan=2>" . $jmlayout_values['layout_title'] .
-		"<br>Fields settings: ". $jmlayout_values['layout_setting'] . ".php  </td> </tr>";
+		"<br>Fields settings: ". $jmlayout_values['layout_setting'] . " </td> </tr>";
 		$textremove = '';
- 
+  
 		if ($settings['fields'] > 0)
 		{
 			$nameitem = 'layout_options[fields]';
@@ -154,7 +150,7 @@ class jmlayouts_form_ui extends e_admin_form_ui
 	}
 
 	public function elements_content($name = '')
-	{
+	{   
 		if ($name)
 		{
 			if(e_DEBUG) {
