@@ -268,11 +268,10 @@ class jmlayouts_ui extends e_admin_ui
     
     public function GeneratePage()
     {
-        $text = e_SELF;
+        $text = e_SELF;  
         foreach ($this->layouts as $layoutmode=>$layoutname) {
             $where = ' layout_mode = "'.$layoutmode.'" LIMIT 1 ';
             $jmlayout = e107::getDb()->retrieve('jmlayout', 'layout_mode, layout_title, layout_setting', $where);
-                
             if ($jmlayout['layout_mode']) {
                 //do nothing? Or update name?
             } else {
@@ -282,13 +281,12 @@ class jmlayouts_ui extends e_admin_ui
                             'layout_setting'=> 'default',
                             'layout_header'=> '',
                             'layout_footer'=> '',
-                            'layout_options'=> array()
+                            'layout_options'=> ''
                         );
                 $insertdata['_DUPLICATE_KEY_UPDATE'] = true; //just to be sure
                 e107::getDb()->insert('jmlayout', $insertdata);
             }
         }
- 
         header("location: ".e_SELF);
         exit();
     }
