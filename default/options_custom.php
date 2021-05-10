@@ -1,5 +1,5 @@
 <?php
-$options['custom'] = array(
+$options = array(
 	'fields' => array(
 		"no-image" => array(
 			'title' => 'No background image, neither default one',

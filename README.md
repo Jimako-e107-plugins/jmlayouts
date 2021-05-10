@@ -3,6 +3,10 @@
 What left from JMTheme plugin after changes in core for 2.3.1 version
 
 
+## version 1.0.3
+
+* FIX not needed option key in option file, only file name is important
+
 ## version 1.0.2
 
 * FIX Added by mistake deleted Generate page

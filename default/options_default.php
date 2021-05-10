@@ -1,5 +1,5 @@
 <?php
-$options['default'] = array(
+$options = array(
 	'fields' => array(
 		"bodyclass" => array(
 			'title' => 'Body Classes for this layout',

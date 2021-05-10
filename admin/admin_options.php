@@ -106,7 +106,7 @@ class jmlayouts_form_ui extends e_admin_form_ui
 		if ((file_exists($this->filepath)))
 		{
 			require_once $this->filepath;
-			$this->custom_fields = $options[$name];
+			$this->custom_fields = $options; 
 			$text = "Custom preferences file from theme folder ". strtoupper($this->folder)." were used.";
 			e107::getMessage()->addInfo($text);
 		}
@@ -123,7 +123,7 @@ class jmlayouts_form_ui extends e_admin_form_ui
 	{
  
 		$curVal = e107::pref('jmlayout' );
-		 
+		  
 		$value = array();
 		$name = 'custom';
 
@@ -159,7 +159,7 @@ class jmlayouts_form_ui extends e_admin_form_ui
 		$textremove = '';
  
 		//single fields, mainly headers
-		$settings = $this->custom_fields;
+		$settings = $this->custom_fields;   
 		if ($settings['fields'] > 0)
 		{
 			$nameitem = $name . '[fields]';
