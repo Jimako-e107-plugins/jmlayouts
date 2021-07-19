@@ -146,9 +146,7 @@ class jmlayouts_ui extends e_admin_ui
     {
         $this->sitetheme = e107::getPref('sitetheme');
         $value = e107::getThemeConfig($this->sitetheme)->getPref();
-        $this->theme_folder  = varset($value['parent_theme'], $this->sitetheme);
-
-            
+             
         /**********************************************************************/
         //display keys, not names
         foreach ($this->layouts as $key => $value) {
@@ -168,21 +166,7 @@ class jmlayouts_ui extends e_admin_ui
                 }
                     
                 $fname = str_replace(".html", "", $file);
-                $headerlist[$this->sitetheme."/headers/".$file] = $this->sitetheme."/headers/".$file;
-            }
-        }
-         
-        $directory = e_THEME. $this->theme_folder.'/headers';
-        if (is_dir($directory)) 
-		{
-            $files =  array_diff(scandir($directory), array('..', '.'));
-            foreach ($files as $file) {
-                if (is_dir($directory."/".$file)) {
-                    continue;
-                }
-                    
-                $fname = str_replace(".html", "", $file);
-                $headerlist[$this->theme_folder."/headers/".$file] = $this->theme_folder."/headers/".$file;
+                $headerlist[$file] = $file;
             }
         }
  
@@ -199,21 +183,10 @@ class jmlayouts_ui extends e_admin_ui
                     continue;
                 }
  
-                $footerlist[$this->sitetheme."/footers/".$file] = $this->sitetheme."/footers/".$file;
+                $footerlist[$file] = $file;
             }
         }
-        $directory = e_THEME. $this->theme_folder.'/footers';
-        if (is_dir($directory)) 
-		{
-            $files =  array_diff(scandir($directory), array('..', '.'));
-            foreach ($files as $file) {
-                if (is_dir($directory."/".$file)) {
-                    continue;
-                }
  
-                $footerlist[$this->theme_folder."/footers/".$file] = $this->theme_folder."/footers/".$file;
-            }
-        }
         $this->fields['layout_footer']['writeParms']['optArray'] = $footerlist;
  
         /**********************************************************************/
@@ -227,20 +200,10 @@ class jmlayouts_ui extends e_admin_ui
                 if (is_dir($directory."/".$file)) {
                     continue;
                 }
-                $settinglist[$this->sitetheme."/jmlayouts/".$file] = $this->sitetheme."/jmlayouts/".$file;
+                $settinglist[$file] = $file;
             }
         }
  
-        $directory = e_THEME. $this->theme_folder.'/jmlayouts';
-        if (is_dir($directory)) {
-            $files =  array_diff(scandir($directory), array('..', '.'));
-            foreach ($files as $file) {
-                if (is_dir($directory."/".$file)) {
-                    continue;
-                }
-                $settinglist[$this->theme_folder."/jmlayouts/".$file] = $this->theme_folder."/jmlayouts/".$file;
-            }
-        }
         $this->fields['layout_setting']['writeParms']['optArray'] = $settinglist;
         $this->postFilterMarkup = $this->AddButton();
     }

@@ -2,6 +2,9 @@
 
 What left from JMTheme plugin after changes in core for 2.3.1 version
 
+## version 1.1.0
+* REMOVED theme name and folders as the part of settings 
+Tested with Cayman 
 
 ## version 1.0.3
 
